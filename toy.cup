@@ -1,0 +1,61 @@
+/**
+ * CUP file for generating the values for the Toy language tokens.
+ * Check EOL characters if file does not seem to read.
+ */
+
+import java_cup.runtime.*;
+
+terminal _boolean;
+terminal _break;
+terminal _class;
+terminal _double;
+terminal _else;
+terminal _extends;
+terminal _for;
+terminal _if;
+terminal _implements;
+terminal _int;
+terminal _interface;
+terminal _newarray;
+terminal _println;
+terminal _readln;
+terminal _return;
+terminal _string;
+terminal _void;
+terminal _while;
+terminal _plus;
+terminal _minus;
+terminal _multiplication;
+terminal _division;
+terminal _mod;
+terminal _less;
+terminal _lessequal;
+terminal _greater;
+terminal _greaterequal;
+terminal _equal;
+terminal _notequal;
+terminal _and;
+terminal _or;
+terminal _not;
+terminal _assignop;
+terminal _semicolon;
+terminal _comma;
+terminal _period;
+terminal _leftparen;
+terminal _rightparen;
+terminal _leftbracket;
+terminal _rightbracket;
+terminal _leftbrace;
+terminal _rightbrace;
+terminal _intconstant;
+terminal _doubleconstant;
+terminal _stringconstant;
+terminal _booleanconstant;
+terminal _id;
+
+
+/**
+ * Dummy non-terminal and grammar rule.
+ */
+non terminal dummy;
+dummy ::= ;
