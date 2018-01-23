@@ -11,7 +11,7 @@ import java.util.Scanner;
 import java.lang.Character;
 
 public final class TriToy {
-  static int[] _switch = new int[52s];
+  static int[] _switch = new int[54];
   static char[] symbol = new char[1200];
   static int[] next = new int[1200];
 
