@@ -23,7 +23,8 @@ public class ToyLexerTest {
         TriToy t = new TriToy();
         final String[] keywords = {"boolean","break", "class", "double", "else", "extends", "false","for","if","implements","int","interface","newarray","println","readln","return","string","true","void","while"};
         for(String str : keywords){
-            t.insertWord(str);
+            int status = t.insertWord(str);
+            System.out.println(status);
         }
         t.printTables();
 
