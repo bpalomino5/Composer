@@ -1,16 +1,6 @@
-/****
- *
- * This is a simple stand-alone testing program for the Pascal lexer defined in
- * PascalLexer.JFLex.  The main method accepts an input file as its first
- * command-line argument.  It then calls the lexer's next_token method with an
- * input reader for that file.  The value of each Symbol returned by next_token
- * is printed to stanard output.
- *                                                                      <p> 
- * The following command-line invocation will read in the test program in the
- * file "lexer-test.p" and print out each token found in that file:
- *
- *
- */
+//Names: Casey Au, Joshua Iwakiri, Brandon Palomino
+//Date: 1/27/18
+//Course: CS 411
 
 import java.io.*;
 import java_cup.runtime.*;
