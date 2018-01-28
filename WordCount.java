@@ -9,7 +9,7 @@ import java.util.Scanner;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 
-#currently needed for TriToy file. It is parsed and put in the Trie table
+//currently needed for TriToy file. It is parsed and put in the Trie table
 public class WordCount {
 
     public static void main(String[] args) {
