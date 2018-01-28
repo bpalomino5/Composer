@@ -11,8 +11,8 @@ import java.lang.Character;
 
 public class TriToy{
   private int[] _switch = new int[52];
-	private char[] symbol = new char[500];
-	private int[] next = new int[500];
+	private char[] symbol = new char[40];
+	private int[] next = new int[40];
 	private char holder;// character of word comparing to symbol chart
 	private int ptr;// index at switch array
 	private int lastEmpty = 0;// index of last empty spot in symbol table
@@ -22,7 +22,11 @@ public class TriToy{
     Arrays.fill(_switch,-1);
   }
 
-  public void insertWord(String token){
+  /*
+  @return: if -1, word has been inserted before
+               0, word has been inserted into table
+  */
+  public int insertWord(String token){
     word = token;
             
     int letterIndex = 0;
@@ -71,6 +75,9 @@ public class TriToy{
         // no jump point,rest of word inserted into symbol
         // table at lastEmpty
         } else if (next[point] == 0) {
+          if(point == word.length()-1){
+            return -1;
+          }
           next[point] = lastEmpty;
           for (int i = letterIndex; i < word.length(); i++) {
             symbol[lastEmpty] = word.charAt(i);
@@ -79,12 +86,11 @@ public class TriToy{
           //new identifiers
           symbol[lastEmpty] = '?';
           lastEmpty++;
-          //printTables();
-          break;
+          return 0;
         }
       }
     }
-    printTables();
+    return 0;
   }
 
 
@@ -106,7 +112,7 @@ public class TriToy{
   }
 
   // prints out switch, symbol and next arrays formatted
-  private void printTables() {
+  public void printTables() {
     System.out.print("\t");
     //print char A-T
     for (int i = 65; i < 85; i++) {
