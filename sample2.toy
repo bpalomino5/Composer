@@ -1,0 +1,12 @@
+void mathDoubles(){
+	int x = 55;
+	int y;
+	y = 20;
+	double z;
+	z = 0.12;
+	println("x,y,z",x,y,z);
+}
+
+void HexTest(double yes){
+	int myhexvalue = 0xAFD;
+}
