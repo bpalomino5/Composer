@@ -18,15 +18,24 @@ import java_cup.runtime.*;
 
 
 %{
-    StringBuffer string = new StringBuffer();
 
-    private Symbol symbol(int type) {
-        return new Symbol(type, yyline, yycolumn);
-    }
+/**
+ * Return a new Symbol with the given token id, and with the current line and
+ * column numbers.
+ */
+Symbol newSym(int tokenId) {
+    return new Symbol(tokenId, yyline, yycolumn);
+}
 
-    private Symbol symbol(int type, Object value) {
-        return new Symbol(type, yyline, yycolumn, value);
-    }
+/**
+ * Return a new Symbol with the given token id, the current line and column
+ * numbers, and the given token value.  The value is used for tokens such as
+ * identifiers and numbers.
+ */
+Symbol newSym(int tokenId, Object value) {
+    return new Symbol(tokenId, yyline, yycolumn, value);
+}
+
 %}
 
 
@@ -55,48 +64,48 @@ BooleanConstant = "true" | "false"
 /**
  * Lexical Rules
  */
-"_boolean"          { return newSym(sym._boolean); }
-"_break"            { return newSym(sym._break); }
-"_class"            { return newSym(sym._class); }
-"_double"           { return newSym(sym._double); }
-"_else"             { return newSym(sym._else); }
-"_extends"          { return newSym(sym._extends); }
-"_for"              { return newSym(sym._for); }
-"_if"               { return newSym(sym._if); }
-"_implements"       { return newSym(sym._implements); }
-"_int"              { return newSym(sym._int); }
-"_interface"        { return newSym(sym._interface); }
-"_newarray"         { return newSym(sym._newarray); }
-"_println"          { return newSym(sym._println); }
-"_readln"           { return newSym(sym._readln); }
-"_return"           { return newSym(sym._return); }
-"_string"           { return newSym(sym._string); }
-"_void"             { return newSym(sym._void); }
-"_while"            { return newSym(sym._while); }
-"_plus"             { return newSym(sym._plus); }
-"_minus"            { return newSym(sym._minus); }
-"_multiplication"   { return newSym(sym._multiplication); }
-"_division"         { return newSym(sym._division); }
-"_mod"              { return newSym(sym._mod); }
-"_less"             { return newSym(sym._less); }
-"_lessequal"        { return newSym(sym._lessequal); }
-"_greater"          { return newSym(sym._greater); }
-"_greaterequal"     { return newSym(sym._greaterequal); }
-"_equal"            { return newSym(sym._equal); }
-"_notequal"         { return newSym(sym._notequal); }
-"_and"              { return newSym(sym._and); }
-"_or"               { return newSym(sym._or); }
-"_not"              { return newSym(sym._not); }
-"_assignop"         { return newSym(sym._assignop); }
-"_semicolon"        { return newSym(sym._semicolon); }
-"_comma"            { return newSym(sym._comma); }
-"_period"           { return newSym(sym._period); }
-"_leftparen"        { return newSym(sym._leftparen); }
-"_rightparen"       { return newSym(sym._rightparen); }
-"_leftbracket"      { return newSym(sym._leftbracket); }
-"_rightbracket"     { return newSym(sym._rightbracket); }
-"_leftbrace"        { return newSym(sym._leftbrace); }
-"_rightbrace"       { return newSym(sym._rightbrace); }
+"boolean"          { return newSym(sym._boolean); }
+"break"            { return newSym(sym._break); }
+"class"            { return newSym(sym._class); }
+"double"           { return newSym(sym._double); }
+"else"             { return newSym(sym._else); }
+"extends"          { return newSym(sym._extends); }
+"for"              { return newSym(sym._for); }
+"if"               { return newSym(sym._if); }
+"implements"       { return newSym(sym._implements); }
+"int"              { return newSym(sym._int); }
+"interface"        { return newSym(sym._interface); }
+"newarray"         { return newSym(sym._newarray); }
+"println"          { return newSym(sym._println); }
+"readln"           { return newSym(sym._readln); }
+"return"           { return newSym(sym._return); }
+"string"           { return newSym(sym._string); }
+"void"             { return newSym(sym._void); }
+"while"            { return newSym(sym._while); }
+"+"	                { return newSym(sym._plus); }
+"-"		            { return newSym(sym._minus); }
+"*"				    { return newSym(sym._multiplication); }
+"/"		            { return newSym(sym._division); }
+"%"	                { return newSym(sym._mod); }
+"<"	                { return newSym(sym._less); }
+"<="		        { return newSym(sym._lessequal); }
+">"		            { return newSym(sym._greater); }
+">="		        { return newSym(sym._greaterequal); }
+"=="	            { return newSym(sym._equal); }
+"!="	            { return newSym(sym._notequal); }
+"&&"                { return newSym(sym._and); }
+"||"                { return newSym(sym._or); }
+"!"	                { return newSym(sym._not); }
+"="		            { return newSym(sym._assignop); }
+";"			        { return newSym(sym._semicolon); }
+","		            { return newSym(sym._comma); }
+"."		            { return newSym(sym._period); }
+"("			        { return newSym(sym._leftparen); }
+")"			        { return newSym(sym._rightparen); }
+"["			        { return newSym(sym._leftbracket); }
+"]"			        { return newSym(sym._rightbracket); }
+"{"			        { return newSym(sym._leftbrace); }
+"}"			        { return newSym(sym._rightbrace); }
 {BooleanConstant}   { return newSym(sym._booleanconstant, new Boolean(yytext())); }
 {IntegerConstant}   { return newSym(sym._intconstant, new Integer(yytext())); }
 {DoubleConstant}    { return newSym(sym._doubleconstant, new Double(yytext())); }
