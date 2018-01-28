@@ -19,6 +19,14 @@ public class ToyLexerTest {
     public static void main(String[] args) {
         Symbol symbol;
         sym s = new sym();
+
+        TriToy t = new TriToy();
+        final String[] keywords = {"boolean","break", "class", "double", "else", "extends", "false","for","if","implements","int","interface","newarray","println","readln","return","string","true","void","while"};
+        for(String str : keywords){
+            t.insertWord(str);
+        }
+        t.printTables();
+
         try {
             ToyLexer lexer = new ToyLexer(new FileReader(args[0]));
             // for (symbol = lexer.next_token(); symbol.sym != 0; symbol = lexer.next_token()) {
@@ -30,19 +38,22 @@ public class ToyLexerTest {
             //     System.out.println(token.substring(1));
             // }
 
-            symbol = lexer.next_token();
-            int lineNumber = symbol.left;
-            while(symbol.sym != 0){
-                if(lineNumber != symbol.left){
-                    System.out.println();
-                    lineNumber = symbol.left;
-                }
-                String token = s.terminalNames[Integer.parseInt(symbol.toString().substring(1))];
-                System.out.print(token.substring(1) + " ");
-                symbol = lexer.next_token();
-            }
+            // symbol = lexer.next_token();
+            // int lineNumber = symbol.left;
+            // while(symbol.sym != 0){
+            //     if(lineNumber != symbol.left){
+            //         System.out.println();
+            //         lineNumber = symbol.left;
+            //     }
+            //     String token = s.terminalNames[Integer.parseInt(symbol.toString().substring(1))];
+            //     System.out.print(token.substring(1) + " ");
+            //     symbol = lexer.next_token();
+            // }
         }
         catch (Exception e) {
         }
+
+        // t.insertWord("ape");
+        // t.printTables();
     }
 }
