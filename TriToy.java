@@ -11,8 +11,8 @@ import java.lang.Character;
 
 public class TriToy{
   private int[] _switch = new int[52];
-	private char[] symbol = new char[40];
-	private int[] next = new int[40];
+	private char[] symbol = new char[500];
+	private int[] next = new int[500];
 	private char holder;// character of word comparing to symbol chart
 	private int ptr;// index at switch array
 	private int lastEmpty = 0;// index of last empty spot in symbol table
