@@ -48,7 +48,10 @@ public class TriToy{
                 
       //Case B
     }else{
-      if(word.length()==1) return -1;
+      if(word.length() == 1){
+      	return -1;
+      }
+
       letterIndex++;
       holder = word.charAt(letterIndex);
       // @point = starts taking value at switch,pointer comparing

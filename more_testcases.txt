@@ -1,0 +1,78 @@
+// Testing _boolean, _if, _else, _lessequal, _return, _true, _false, _semicolon, _leftparen, _rightparen
+// _leftbrace, _rightbrace, _intconstant, _booleanconstant, _id
+boolean fail(int y) {
+    if  (y <= 22) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/* Testing string literals, _string, _newarray, _break, _for, _less, _plus, _greater, 
+ * _multiplication, _assignop, _comma, _leftbracket, _rightbracket, _stringconstant
+ */
+string[]  strings(int  num, int num2) {
+    string[] output = newarray(num, string);
+    for (int i = 0; i < num; i = i + 1) {
+        output[i] = "hello";
+        if ( num > 2 * num2) { break; }
+    }
+}
+
+// Testing _interface
+interface Template {
+    void display();
+}
+
+// Testing _implements, _double, _println, _void, hex integers, _doubleconstant
+class HelloClass implements Template{
+    int a;
+    double  b;
+    boolean c;
+    
+    HelloClass() {
+        a = 0x9;
+        b = 55555393.5;
+        c = false;
+    }
+    
+    HelloClass(int arg, double arg2, boolean arg3) {
+        a = arg;
+        b = arg2;
+        c = arg3;
+    }
+    
+    void display () {
+        for (int n = a; b >= n; n = n * 2) {
+            println("_");
+        }
+    }
+}
+
+// Testing extends, _minus, _while, _division, _mod, _greater
+class HelloClass2 extends HelloClass {
+    void subtract(double aaa) {
+        while (b > 0) {
+            b = b - aaa;
+        }
+    }
+    
+    double divide() {
+        return b / 2.5;
+    }
+    
+    int getMod(int q) {
+        return a % q;
+    }
+}
+
+// Testing _equal, _and, _or, _notequal, _not
+boolean isequal(boolean bool) {
+    if (bool == false && bool != true || !true) {
+        return true;
+    }
+}
+
+/* Assorted other tokens I'm not sure what to do with.  No attempt at likely syntax*/
+readln()
+.
