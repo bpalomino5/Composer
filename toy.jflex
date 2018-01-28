@@ -5,6 +5,7 @@
 
 import java_cup.runtime.*;
 
+
 %%
 /**
  * Lexical Functions:
@@ -53,48 +54,48 @@ BooleanConstant = "true" | "false"
 /**
  * Lexical Rules
  */
-"_boolean"          { return symbol(sym._boolean); }
-"_break"            { return symbol(sym._break); }
-"_class"            { return symbol(sym._class); }
-"_double"           { return symbol(sym._double); }
-"_else"             { return symbol(sym._else); }
-"_extends"          { return symbol(sym._extends); }
-"_for"              { return symbol(sym._for); }
-"_if"               { return symbol(sym._if); }
-"_implements"       { return symbol(sym._implements); }
-"_int"              { return symbol(sym._int); }
-"_interface"        { return symbol(sym._interface); }
-"_newarray"         { return symbol(sym._newarray); }
-"_println"          { return symbol(sym._println); }
-"_readln"           { return symbol(sym._readln); }
-"_return"           { return symbol(sym._return); }
-"_string"           { return symbol(sym._string); }
-"_void"             { return symbol(sym._void); }
-"_while"            { return symbol(sym._while); }
-"_plus"             { return symbol(sym._plus); }
-"_minus"            { return symbol(sym._minus); }
-"_multiplication"   { return symbol(sym._multiplication); }
-"_division"         { return symbol(sym._division); }
-"_mod"              { return symbol(sym._mod); }
-"_less"             { return symbol(sym._less); }
-"_lessequal"        { return symbol(sym._lessequal); }
-"_greater"          { return symbol(sym._greater); }
-"_greaterequal"     { return symbol(sym._greaterequal); }
-"_equal"            { return symbol(sym._equal); }
-"_notequal"         { return symbol(sym._notequal); }
-"_and"              { return symbol(sym._and); }
-"_or"               { return symbol(sym._or); }
-"_not"              { return symbol(sym._not); }
-"_assignop"         { return symbol(sym._assignop); }
-"_semicolon"        { return symbol(sym._semicolon); }
-"_comma"            { return symbol(sym._comma); }
-"_period"           { return symbol(sym._period); }
-"_leftparen"        { return symbol(sym._leftparen); }
-"_rightparen"       { return symbol(sym._rightparen); }
-"_leftbracket"      { return symbol(sym._leftbracket); }
-"_rightbracket"     { return symbol(sym._rightbracket); }
-"_leftbrace"        { return symbol(sym._leftbrace); }
-"_rightbrace"       { return symbol(sym._rightbrace); }
+"boolean"           { return symbol(sym._boolean); }
+"break"             { return symbol(sym._break); }
+"class"             { return symbol(sym._class); }
+"double"            { return symbol(sym._double); }
+"else"              { return symbol(sym._else); }
+"extends"           { return symbol(sym._extends); }
+"for"               { return symbol(sym._for); }
+"if"                { return symbol(sym._if); }
+"implements"        { return symbol(sym._implements); }
+"int"               { return symbol(sym._int); }
+"interface"         { return symbol(sym._interface); }
+"newarray"          { return symbol(sym._newarray); }
+"println"           { return symbol(sym._println); }
+"readln"            { return symbol(sym._readln); }
+"return"            { return symbol(sym._return); }
+"string"            { return symbol(sym._string); }
+"void"              { return symbol(sym._void); }
+"while"             { return symbol(sym._while); }
+"+"                 { return symbol(sym._plus); }
+"-"                 { return symbol(sym._minus); }
+"*"                 { return symbol(sym._multiplication); }
+"/"                 { return symbol(sym._division); }
+"%"                 { return symbol(sym._mod); }
+"<"                 { return symbol(sym._less); }
+"<="                { return symbol(sym._lessequal); }
+">"                 { return symbol(sym._greater); }
+">="                { return symbol(sym._greaterequal); }
+"=="                { return symbol(sym._equal); }
+"!="                { return symbol(sym._notequal); }
+"&&"                { return symbol(sym._and); }
+"||"                { return symbol(sym._or); }
+"!"                 { return symbol(sym._not); }
+"="                 { return symbol(sym._assignop); }
+";"                 { return symbol(sym._semicolon); }
+","                 { return symbol(sym._comma); }
+"."                 { return symbol(sym._period); }
+"("                 { return symbol(sym._leftparen); }
+")"                 { return symbol(sym._rightparen); }
+"["                 { return symbol(sym._leftbracket); }
+"]"                 { return symbol(sym._rightbracket); }
+"{"                 { return symbol(sym._leftbrace); }
+"}"                 { return symbol(sym._rightbrace); }
 {BooleanConstant}   { return symbol(sym._booleanconstant, new Boolean(yytext())); }
 {IntegerConstant}   { return symbol(sym._intconstant, new Integer(yytext())); }
 {DoubleConstant}    { return symbol(sym._doubleconstant, new Double(yytext())); }
