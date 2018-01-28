@@ -75,7 +75,7 @@ public class TriToy{
         // no jump point,rest of word inserted into symbol
         // table at lastEmpty
         } else if (next[point] == 0) {
-          if(point == word.length()-1){
+          if(letterIndex == word.length()-1){
             return -1;
           }
           next[point] = lastEmpty;
