@@ -18,8 +18,6 @@ import java_cup.runtime.*;
 
 
 %{
-    StringBuffer string = new StringBuffer();
-
     private Symbol symbol(int type) {
         return new Symbol(type, yyline, yycolumn);
     }
@@ -55,53 +53,53 @@ BooleanConstant = "true" | "false"
 /**
  * Lexical Rules
  */
-"_boolean"          { return newSym(sym._boolean); }
-"_break"            { return newSym(sym._break); }
-"_class"            { return newSym(sym._class); }
-"_double"           { return newSym(sym._double); }
-"_else"             { return newSym(sym._else); }
-"_extends"          { return newSym(sym._extends); }
-"_for"              { return newSym(sym._for); }
-"_if"               { return newSym(sym._if); }
-"_implements"       { return newSym(sym._implements); }
-"_int"              { return newSym(sym._int); }
-"_interface"        { return newSym(sym._interface); }
-"_newarray"         { return newSym(sym._newarray); }
-"_println"          { return newSym(sym._println); }
-"_readln"           { return newSym(sym._readln); }
-"_return"           { return newSym(sym._return); }
-"_string"           { return newSym(sym._string); }
-"_void"             { return newSym(sym._void); }
-"_while"            { return newSym(sym._while); }
-"_plus"             { return newSym(sym._plus); }
-"_minus"            { return newSym(sym._minus); }
-"_multiplication"   { return newSym(sym._multiplication); }
-"_division"         { return newSym(sym._division); }
-"_mod"              { return newSym(sym._mod); }
-"_less"             { return newSym(sym._less); }
-"_lessequal"        { return newSym(sym._lessequal); }
-"_greater"          { return newSym(sym._greater); }
-"_greaterequal"     { return newSym(sym._greaterequal); }
-"_equal"            { return newSym(sym._equal); }
-"_notequal"         { return newSym(sym._notequal); }
-"_and"              { return newSym(sym._and); }
-"_or"               { return newSym(sym._or); }
-"_not"              { return newSym(sym._not); }
-"_assignop"         { return newSym(sym._assignop); }
-"_semicolon"        { return newSym(sym._semicolon); }
-"_comma"            { return newSym(sym._comma); }
-"_period"           { return newSym(sym._period); }
-"_leftparen"        { return newSym(sym._leftparen); }
-"_rightparen"       { return newSym(sym._rightparen); }
-"_leftbracket"      { return newSym(sym._leftbracket); }
-"_rightbracket"     { return newSym(sym._rightbracket); }
-"_leftbrace"        { return newSym(sym._leftbrace); }
-"_rightbrace"       { return newSym(sym._rightbrace); }
-{BooleanConstant}   { return newSym(sym._booleanconstant, new Boolean(yytext())); }
-{IntegerConstant}   { return newSym(sym._intconstant, new Integer(yytext())); }
-{DoubleConstant}    { return newSym(sym._doubleconstant, new Double(yytext())); }
-{StringConstant}    { return newSym(sym._stringconstant, yytext()); }
-{Identifier}        { return newSym(sym._id, yytext()); }
+"_boolean"          { return symbol(sym._boolean); }
+"_break"            { return symbol(sym._break); }
+"_class"            { return symbol(sym._class); }
+"_double"           { return symbol(sym._double); }
+"_else"             { return symbol(sym._else); }
+"_extends"          { return symbol(sym._extends); }
+"_for"              { return symbol(sym._for); }
+"_if"               { return symbol(sym._if); }
+"_implements"       { return symbol(sym._implements); }
+"_int"              { return symbol(sym._int); }
+"_interface"        { return symbol(sym._interface); }
+"_newarray"         { return symbol(sym._newarray); }
+"_println"          { return symbol(sym._println); }
+"_readln"           { return symbol(sym._readln); }
+"_return"           { return symbol(sym._return); }
+"_string"           { return symbol(sym._string); }
+"_void"             { return symbol(sym._void); }
+"_while"            { return symbol(sym._while); }
+"_plus"             { return symbol(sym._plus); }
+"_minus"            { return symbol(sym._minus); }
+"_multiplication"   { return symbol(sym._multiplication); }
+"_division"         { return symbol(sym._division); }
+"_mod"              { return symbol(sym._mod); }
+"_less"             { return symbol(sym._less); }
+"_lessequal"        { return symbol(sym._lessequal); }
+"_greater"          { return symbol(sym._greater); }
+"_greaterequal"     { return symbol(sym._greaterequal); }
+"_equal"            { return symbol(sym._equal); }
+"_notequal"         { return symbol(sym._notequal); }
+"_and"              { return symbol(sym._and); }
+"_or"               { return symbol(sym._or); }
+"_not"              { return symbol(sym._not); }
+"_assignop"         { return symbol(sym._assignop); }
+"_semicolon"        { return symbol(sym._semicolon); }
+"_comma"            { return symbol(sym._comma); }
+"_period"           { return symbol(sym._period); }
+"_leftparen"        { return symbol(sym._leftparen); }
+"_rightparen"       { return symbol(sym._rightparen); }
+"_leftbracket"      { return symbol(sym._leftbracket); }
+"_rightbracket"     { return symbol(sym._rightbracket); }
+"_leftbrace"        { return symbol(sym._leftbrace); }
+"_rightbrace"       { return symbol(sym._rightbrace); }
+{BooleanConstant}   { return symbol(sym._booleanconstant, new Boolean(yytext())); }
+{IntegerConstant}   { return symbol(sym._intconstant, new Integer(yytext())); }
+{DoubleConstant}    { return symbol(sym._doubleconstant, new Double(yytext())); }
+{StringConstant}    { return symbol(sym._stringconstant, yytext()); }
+{Identifier}        { return symbol(sym._id, yytext()); }
 {Comment}           { /* Ignore comments */ }
 {Whitespace}        { /* Ignore whitespace */ }
 .                   { System.out.println("Error in string:  '" + yytext() + "'"); }

@@ -349,8 +349,6 @@ class ToyLexer implements java_cup.runtime.Scanner {
   private int zzFinalHighSurrogate = 0;
 
   /* user code: */
-    StringBuffer string = new StringBuffer();
-
     private Symbol symbol(int type) {
         return new Symbol(type, yyline, yycolumn);
     }
@@ -752,11 +750,11 @@ class ToyLexer implements java_cup.runtime.Scanner {
             }
           case 52: break;
           case 3: 
-            { return newSym(sym._id, yytext());
+            { return symbol(sym._id, yytext());
             }
           case 53: break;
           case 4: 
-            { return newSym(sym._intconstant, new Integer(yytext()));
+            { return symbol(sym._intconstant, new Integer(yytext()));
             }
           case 54: break;
           case 5: 
@@ -764,183 +762,183 @@ class ToyLexer implements java_cup.runtime.Scanner {
             }
           case 55: break;
           case 6: 
-            { return newSym(sym._doubleconstant, new Double(yytext()));
+            { return symbol(sym._doubleconstant, new Double(yytext()));
             }
           case 56: break;
           case 7: 
-            { return newSym(sym._stringconstant, yytext());
+            { return symbol(sym._stringconstant, yytext());
             }
           case 57: break;
           case 8: 
-            { return newSym(sym._or);
+            { return symbol(sym._or);
             }
           case 58: break;
           case 9: 
-            { return newSym(sym._if);
+            { return symbol(sym._if);
             }
           case 59: break;
           case 10: 
-            { return newSym(sym._for);
+            { return symbol(sym._for);
             }
           case 60: break;
           case 11: 
-            { return newSym(sym._and);
+            { return symbol(sym._and);
             }
           case 61: break;
           case 12: 
-            { return newSym(sym._not);
+            { return symbol(sym._not);
             }
           case 62: break;
           case 13: 
-            { return newSym(sym._int);
+            { return symbol(sym._int);
             }
           case 63: break;
           case 14: 
-            { return newSym(sym._mod);
+            { return symbol(sym._mod);
             }
           case 64: break;
           case 15: 
-            { return newSym(sym._booleanconstant, new Boolean(yytext()));
+            { return symbol(sym._booleanconstant, new Boolean(yytext()));
             }
           case 65: break;
           case 16: 
-            { return newSym(sym._else);
+            { return symbol(sym._else);
             }
           case 66: break;
           case 17: 
-            { return newSym(sym._less);
+            { return symbol(sym._less);
             }
           case 67: break;
           case 18: 
-            { return newSym(sym._plus);
+            { return symbol(sym._plus);
             }
           case 68: break;
           case 19: 
-            { return newSym(sym._void);
+            { return symbol(sym._void);
             }
           case 69: break;
           case 20: 
-            { return newSym(sym._equal);
+            { return symbol(sym._equal);
             }
           case 70: break;
           case 21: 
-            { return newSym(sym._break);
+            { return symbol(sym._break);
             }
           case 71: break;
           case 22: 
-            { return newSym(sym._class);
+            { return symbol(sym._class);
             }
           case 72: break;
           case 23: 
-            { return newSym(sym._comma);
+            { return symbol(sym._comma);
             }
           case 73: break;
           case 24: 
-            { return newSym(sym._minus);
+            { return symbol(sym._minus);
             }
           case 74: break;
           case 25: 
-            { return newSym(sym._while);
+            { return symbol(sym._while);
             }
           case 75: break;
           case 26: 
-            { return newSym(sym._return);
+            { return symbol(sym._return);
             }
           case 76: break;
           case 27: 
-            { return newSym(sym._readln);
+            { return symbol(sym._readln);
             }
           case 77: break;
           case 28: 
-            { return newSym(sym._string);
+            { return symbol(sym._string);
             }
           case 78: break;
           case 29: 
-            { return newSym(sym._double);
+            { return symbol(sym._double);
             }
           case 79: break;
           case 30: 
-            { return newSym(sym._period);
+            { return symbol(sym._period);
             }
           case 80: break;
           case 31: 
-            { return newSym(sym._extends);
+            { return symbol(sym._extends);
             }
           case 81: break;
           case 32: 
-            { return newSym(sym._boolean);
+            { return symbol(sym._boolean);
             }
           case 82: break;
           case 33: 
-            { return newSym(sym._println);
+            { return symbol(sym._println);
             }
           case 83: break;
           case 34: 
-            { return newSym(sym._greater);
+            { return symbol(sym._greater);
             }
           case 84: break;
           case 35: 
-            { return newSym(sym._assignop);
+            { return symbol(sym._assignop);
             }
           case 85: break;
           case 36: 
-            { return newSym(sym._newarray);
+            { return symbol(sym._newarray);
             }
           case 86: break;
           case 37: 
-            { return newSym(sym._notequal);
+            { return symbol(sym._notequal);
             }
           case 87: break;
           case 38: 
-            { return newSym(sym._division);
+            { return symbol(sym._division);
             }
           case 88: break;
           case 39: 
-            { return newSym(sym._leftbrace);
+            { return symbol(sym._leftbrace);
             }
           case 89: break;
           case 40: 
-            { return newSym(sym._leftparen);
+            { return symbol(sym._leftparen);
             }
           case 90: break;
           case 41: 
-            { return newSym(sym._lessequal);
+            { return symbol(sym._lessequal);
             }
           case 91: break;
           case 42: 
-            { return newSym(sym._semicolon);
+            { return symbol(sym._semicolon);
             }
           case 92: break;
           case 43: 
-            { return newSym(sym._interface);
+            { return symbol(sym._interface);
             }
           case 93: break;
           case 44: 
-            { return newSym(sym._rightbrace);
+            { return symbol(sym._rightbrace);
             }
           case 94: break;
           case 45: 
-            { return newSym(sym._rightparen);
+            { return symbol(sym._rightparen);
             }
           case 95: break;
           case 46: 
-            { return newSym(sym._implements);
+            { return symbol(sym._implements);
             }
           case 96: break;
           case 47: 
-            { return newSym(sym._leftbracket);
+            { return symbol(sym._leftbracket);
             }
           case 97: break;
           case 48: 
-            { return newSym(sym._rightbracket);
+            { return symbol(sym._rightbracket);
             }
           case 98: break;
           case 49: 
-            { return newSym(sym._greaterequal);
+            { return symbol(sym._greaterequal);
             }
           case 99: break;
           case 50: 
-            { return newSym(sym._multiplication);
+            { return symbol(sym._multiplication);
             }
           case 100: break;
           default:
