@@ -5,6 +5,84 @@
 
 import java_cup.runtime.*;
 
+/* Parser code */
+parser code {:
+    // StringBuilder for holding the output string.
+    StringBuilder output = new StringBuilder();
+    // Symbol table
+    sym s = new sym();
+    // ID of the current token
+    int symIndex;
+
+    /**
+     * Return the string value for a given symbol.
+     */
+    public String getSymbolOutputString(Symbol symbol) {
+        // Get int corresponding to Symbol type.
+        symIndex = Integer.parseInt(symbol.toString().substring(1));
+        // If symbol is an _id return its value.  Else, if symbol is an EOF return an empty string.
+        // Else, return the value from sym.terminalNames[];
+        String val;
+        if (symIndex == 48) {
+            val = (String) symbol.value + " ";
+        } else if (symIndex == 0) {
+            val = "";
+        } else {
+            val = sym.terminalNames[symIndex] + " ";
+        }
+        return val;
+    }
+
+    /**
+     * Add a reduce rule with the given number to the output string.
+     */
+    public void reduceRuleOutput(int ruleNum) {
+        output.insert(output.length() - 7, "[reduce");
+        output.insert(output.length() - 7, ruleNum);
+        output.insert(output.length() - 7, ']');
+    }
+    
+    /**
+     * Override the default report_error() method.
+     */
+    public void report_fatal_error(String message, Object info) {
+        System.out.println("[reject]");
+    }
+    
+    /**
+     * Override the default report_error() method.
+     */
+    public void report_error(String message, Object info) {
+        // Do nothing
+    }
+    
+    /**
+     * Override the default report_syntax_error() method.
+     */
+    public void syntax_error(Symbol cur_token) {
+        // Do nothing
+    }
+:}
+
+/* Scan with */
+scan with {:
+    // Print and clear output string
+    if (output.length() > 0) {
+        System.out.println(output.toString());
+        output.delete(0, output.length());
+    }
+
+    // Get next token and print it
+    Symbol token = getScanner().next_token();
+    System.out.print(getSymbolOutputString(token));
+
+    // Add a "shift" to the end of the output string.
+    output = output.append("[shift]");
+
+    return token;
+:}
+
+/* terminals */
 terminal _boolean;
 terminal _break;
 terminal _class;
@@ -53,9 +131,352 @@ terminal _stringconstant;
 terminal _booleanconstant;
 terminal _id;
 
+/* non terminals */
+non terminal Program;
+non terminal A;
+non terminal Decl;
+non terminal VariableDecl;
+non terminal FunctionDecl;
+non terminal ClassDecl;
+non terminal InterfaceDecl;
+non terminal Variable;
+non terminal Type;
+non terminal Formals;
+non terminal StmtBlock;
+non terminal B;
+non terminal C;
+non terminal D;
+non terminal E;
+non terminal F;
+non terminal Field;
+non terminal G;
+non terminal Prototype;
+non terminal H;
+non terminal I;
+non terminal Stmt;
+non terminal IfStmt;
+non terminal WhileStmt;
+non terminal ForStmt;
+non terminal BreakStmt;
+non terminal ReturnStmt;
+non terminal PrintStmt;
+non terminal J;
+non terminal Expr;
+non terminal K;
+non terminal L;
+non terminal Lvalue;
+non terminal M;
+non terminal N;
+non terminal O;
+non terminal P;
+non terminal Q;
+non terminal R;
+non terminal S;
+non terminal T;
+non terminal Constant;
+non terminal Call;
+non terminal Actuals;
 
-/**
- * Dummy non-terminal and grammar rule.
- */
-non terminal dummy;
-dummy ::= ;
+/* Precedence */
+precedence left _assignop;
+precedence left _or;
+precedence left _and;
+precedence left _equal, _notequal;
+precedence nonassoc _greater, _greaterequal, _less, _lessequal;
+precedence left _plus, _minus;
+precedence left _multiplication, _division, _mod;
+precedence left _not;
+precedence left _leftbracket, _period;
+
+/* Grammar rules */
+Program             ::= A
+                        {:
+                            reduceRuleOutput(1);
+                            System.out.println(output.toString().substring(0, output.length() - 7));
+                            output.delete(0, output.length());
+                            if (symIndex == 0) {
+                                System.out.println("[accept]");
+                            }
+                        :}
+                    ;
+A                   ::= Decl
+                            {: reduceRuleOutput(2); :}
+                    |   Decl A
+                            {: reduceRuleOutput(3); :}
+                    ;
+Decl                ::= VariableDecl
+                            {: reduceRuleOutput(4); :}
+                    |   FunctionDecl
+                            {: reduceRuleOutput(5); :}
+                    |   ClassDecl
+                            {: reduceRuleOutput(6); :}
+                    |   InterfaceDecl
+                            {: reduceRuleOutput(7); :}
+                    ;
+VariableDecl        ::= Variable
+                            {: reduceRuleOutput(8); :}
+                    ;
+Variable            ::= Type _id
+                            {: reduceRuleOutput(9); :}
+                    ;
+Type                ::= _int
+                            {: reduceRuleOutput(10); :}
+                    |   _double
+                            {: reduceRuleOutput(11); :}
+                    |   _boolean
+                            {: reduceRuleOutput(12); :}
+                    |   _string
+                            {: reduceRuleOutput(13); :}
+                    |   Type _leftbracket _rightbracket
+                            {: reduceRuleOutput(14); :}
+                    |   _id
+                            {: reduceRuleOutput(15); :}
+                    ;
+FunctionDecl        ::= Type _id _leftparen Formals _rightparen StmtBlock
+                            {: reduceRuleOutput(16); :}
+                    |   _void _id _leftparen Formals _rightparen StmtBlock
+                            {: reduceRuleOutput(17); :}
+                    |   Type _id _leftparen _rightparen StmtBlock
+                            {: reduceRuleOutput(18); :}
+                    |   _void _id _leftparen _rightparen StmtBlock
+                            {: reduceRuleOutput(19); :}
+                    ;
+Formals             ::= B
+                            {: reduceRuleOutput(20); :}
+                    ;
+B                   ::= Variable
+                            {: reduceRuleOutput(21); :}
+                    |   Variable _comma B
+                            {: reduceRuleOutput(22); :}
+                    ;
+ClassDecl           ::= _class _id C D _leftbrace E _leftbrace
+                            {: reduceRuleOutput(23); :}
+                    |   _class _id D _leftbrace E _rightbrace
+                            {: reduceRuleOutput(24); :}
+                    |   _class _id C _leftbrace E _rightbrace
+                            {: reduceRuleOutput(25); :}
+                    |   _class _id _leftbrace E _rightbrace
+                            {: reduceRuleOutput(26); :}
+                    |   _class _id C D _leftbrace _rightbrace
+                            {: reduceRuleOutput(27); :}
+                    |   _class _id D _leftbrace _rightbrace
+                            {: reduceRuleOutput(28); :}
+                    |   _class _id C _leftbrace _rightbrace
+                            {: reduceRuleOutput(29); :}
+                    |   _class _id _leftbrace _rightbrace
+                            {: reduceRuleOutput(30); :}
+                    ;
+C                   ::= _extends _id
+                            {: reduceRuleOutput(31); :}
+                    ;
+D                   ::= F
+                            {: reduceRuleOutput(32); :}
+                    ;
+F                   ::= _implements _id
+                            {: reduceRuleOutput(33); :}
+                    |   _implements _id _comma F
+                            {: reduceRuleOutput(34); :}
+                    ;
+E                   ::= Field E
+                            {: reduceRuleOutput(35); :}
+                    |   Field
+                            {: reduceRuleOutput(36); :}
+                    ;
+Field               ::= VariableDecl
+                            {: reduceRuleOutput(37); :}
+                    |   FunctionDecl
+                            {: reduceRuleOutput(38); :}
+                    ;
+InterfaceDecl       ::= _interface _id _leftbrace G _rightbrace
+                            {: reduceRuleOutput(39); :}
+                    |   _interface _id _leftbrace _rightbrace
+                            {: reduceRuleOutput(40); :}
+                    ;
+G                   ::= Prototype G
+                            {: reduceRuleOutput(41); :}
+                    |   Prototype
+                            {: reduceRuleOutput(42); :}
+                    ;
+Prototype           ::= Type _id _leftparen Formals _rightparen _semicolon
+                            {: reduceRuleOutput(43); :}
+                    |   _void _id _leftparen Formals _rightparen _semicolon
+                            {: reduceRuleOutput(44); :}
+                    |   Type _id _leftparen _rightparen _semicolon
+                            {: reduceRuleOutput(45); :}
+                    |   _void _id _leftparen _rightparen _semicolon
+                            {: reduceRuleOutput(46); :}
+                    ;
+StmtBlock           ::= _leftbrace H I _rightbrace
+                            {: reduceRuleOutput(47); :}
+                    |   _leftbrace I _rightbrace
+                            {: reduceRuleOutput(48); :}
+                    |   _leftbrace H _rightbrace
+                            {: reduceRuleOutput(49); :}
+                    |   _leftbrace _rightbrace
+                            {: reduceRuleOutput(50); :}
+                    ;
+H                   ::= VariableDecl
+                            {: reduceRuleOutput(52); :}
+                    |   VariableDecl H
+                            {: reduceRuleOutput(51); :}
+                    ;
+I                   ::= Stmt I
+                            {: reduceRuleOutput(53); :}
+                    |   Stmt
+                            {: reduceRuleOutput(54); :}
+                    ;
+Stmt                ::= J _semicolon
+                            {: reduceRuleOutput(55); :}
+                    |   IfStmt
+                            {: reduceRuleOutput(56); :}
+                    |   WhileStmt
+                            {: reduceRuleOutput(57); :}
+                    |   ForStmt
+                            {: reduceRuleOutput(58); :}
+                    |   BreakStmt
+                            {: reduceRuleOutput(59); :}
+                    |   ReturnStmt
+                            {: reduceRuleOutput(60); :}
+                    |   PrintStmt
+                            {: reduceRuleOutput(61); :}
+                    |   StmtBlock
+                            {: reduceRuleOutput(62); :}
+                    |   _semicolon
+                            {: reduceRuleOutput(63); :}
+                    ;
+J                   ::= Expr
+                            {: reduceRuleOutput(64); :}
+                    ;
+IfStmt              ::= _if _leftparen Expr _rightparen Stmt K
+                            {: reduceRuleOutput(65); :}
+                    |   _if _leftparen Expr _rightparen Stmt
+                            {: reduceRuleOutput(66); :}
+                    ;
+K                   ::= _else Stmt
+                            {: reduceRuleOutput(67); :}
+                    ;
+WhileStmt           ::= _while _leftparen Expr _rightparen Stmt
+                            {: reduceRuleOutput(68); :}
+                    ;
+ForStmt             ::= _for _leftparen J _semicolon Expr _semicolon J _rightparen Stmt
+                            {: reduceRuleOutput(69); :}
+                    |   _for _leftparen _semicolon Expr _semicolon J _rightparen
+                            {: reduceRuleOutput(70); :}
+                    |   _for _leftparen J _semicolon Expr _semicolon _rightparen
+                            {: reduceRuleOutput(71); :}
+                    |   _for _leftparen _semicolon Expr _semicolon _rightparen
+                            {: reduceRuleOutput(72); :}
+                    ;
+BreakStmt           ::= _break
+                            {: reduceRuleOutput(73); :}
+                    ;
+ReturnStmt          ::= _return J _semicolon
+                            {: reduceRuleOutput(74); :}
+                    |   _return _semicolon
+                            {: reduceRuleOutput(75); :}
+                    ;
+PrintStmt           ::= _println _leftparen L _rightparen _semicolon
+                            {: reduceRuleOutput(76); :}
+                    ;
+L                   ::= Expr
+                            {: reduceRuleOutput(77); :}
+                    |   Expr _comma L
+                            {: reduceRuleOutput(78); :}
+                    ;
+Expr                ::= Lvalue _assignop Expr
+                            {: reduceRuleOutput(79); :}
+                    |   M
+                            {: reduceRuleOutput(80); :}
+                    ;
+M                   ::= N
+                            {: reduceRuleOutput(82); :}
+                    |   Expr _or N
+                            {: reduceRuleOutput(81); :}
+                    ;
+N                   ::= Expr _and O
+                            {: reduceRuleOutput(83); :}
+                    |   O
+                            {: reduceRuleOutput(84); :}
+                    ;
+O                   ::= P
+                            {: reduceRuleOutput(87); :}
+                    |   Expr _equal P
+                            {: reduceRuleOutput(85); :}
+                    |   Expr _notequal P
+                            {: reduceRuleOutput(86); :}
+                    ;
+P                   ::= Q
+                            {: reduceRuleOutput(92); :}
+                    |   Expr _less Expr
+                            {: reduceRuleOutput(88); :}
+                    |   Expr _lessequal Expr
+                            {: reduceRuleOutput(90); :}
+                    |   Expr _greater Expr
+                            {: reduceRuleOutput(89); :}
+                    |   Expr _greaterequal Expr
+                            {: reduceRuleOutput(91); :}
+                    ;
+Q                   ::= R
+                            {: reduceRuleOutput(95); :}
+                    |   Expr _plus R
+                            {: reduceRuleOutput(93); :}
+                    |   Expr _minus R
+                            {: reduceRuleOutput(94); :}
+                    ;
+R                   ::= S
+                            {: reduceRuleOutput(99); :}
+                    |   Expr _multiplication S
+                            {: reduceRuleOutput(96); :}
+                    |   Expr _division S
+                            {: reduceRuleOutput(97); :}
+                    |   Expr _mod S
+                            {: reduceRuleOutput(98); :}
+                    ;
+S                   ::= T
+                            {: reduceRuleOutput(102); :}
+                    |   _not T
+                            {: reduceRuleOutput(100); :}
+                    |   _minus T
+                            {: reduceRuleOutput(101); :} %prec _not
+                    ;
+T                   ::= _leftparen Expr _rightparen
+                            {: reduceRuleOutput(103); :}
+                    |   Constant
+                            {: reduceRuleOutput(104); :}
+                    |   Lvalue
+                            {: reduceRuleOutput(105); :}
+                    |   Call
+                            {: reduceRuleOutput(106); :}
+                    |   _readln _leftparen _rightparen
+                            {: reduceRuleOutput(107); :}
+                    |   _newarray _leftparen _intconstant _comma Type _rightparen
+                            {: reduceRuleOutput(108); :}
+                    ;
+Lvalue              ::= _id
+                            {: reduceRuleOutput(109); :}
+                    |   Lvalue _leftbracket Expr _rightbracket
+                            {: reduceRuleOutput(110); :}
+                    |   Lvalue _period _id
+                            {: reduceRuleOutput(111); :}
+                    ;
+Call                ::= _id _leftparen Actuals _rightparen
+                            {: reduceRuleOutput(112); :}
+                    |   _id _period _id _leftparen Actuals _rightparen
+                            {: reduceRuleOutput(113); :}
+                    |   _id _leftparen _rightparen
+                            {: reduceRuleOutput(114); :}
+                    |   _id _period _id _leftparen _rightparen
+                            {: reduceRuleOutput(115); :}
+                    ;
+Actuals             ::= L
+                            {: reduceRuleOutput(116); :}
+                    ;
+Constant            ::= _intconstant
+                            {: reduceRuleOutput(117); :}
+                    |   _doubleconstant
+                            {: reduceRuleOutput(118); :}
+                    |   _stringconstant
+                            {: reduceRuleOutput(119); :}
+                    |   _booleanconstant
+                            {: reduceRuleOutput(120); :}
+                    ;
