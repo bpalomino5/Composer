@@ -1,10 +1,3 @@
 void f(){
-	if(i==j){
-		int [] a;
-		a = newarray(5, int);
-
-		for(; x <= 10; ){
-			x+y;
-		}
-	}
+	b.b;
 }

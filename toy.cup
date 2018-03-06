@@ -171,6 +171,7 @@ non terminal Constant;
 non terminal Call;
 non terminal Actuals;
 non terminal IdLbracket;
+non terminal IdPeriod;
 
 /* Precedence */
 precedence left _assignop;
@@ -181,7 +182,7 @@ precedence nonassoc _greater, _greaterequal, _less, _lessequal;
 precedence left _plus, _minus;
 precedence left _multiplication, _division, _mod;
 precedence left _not;
-precedence left _leftbracket, _period;
+//precedence left _leftbracket, _period;
 
 /* Grammar rules */
 Program             ::= A
@@ -441,28 +442,33 @@ Lvalue              ::= _id
                             {: reduceRuleOutput(105); :}
                     |   Lvalue _period _id
                             {: reduceRuleOutput(106); :}
+                    |   IdPeriod _id
+                            {: reduceRuleOutput(107); :}
                     ;
 Call                ::= _id _leftparen Actuals _rightparen
-                            {: reduceRuleOutput(107); :}
-                    |   _id _period _id _leftparen Actuals _rightparen
                             {: reduceRuleOutput(108); :}
-                    |   _id _leftparen _rightparen
+                    |   IdPeriod _id _leftparen Actuals _rightparen
                             {: reduceRuleOutput(109); :}
-                    |   _id _period _id _leftparen _rightparen
+                    |   _id _leftparen _rightparen
                             {: reduceRuleOutput(110); :}
-                    ;
-Actuals             ::= L
+                    |   IdPeriod _id _leftparen _rightparen
                             {: reduceRuleOutput(111); :}
                     ;
-Constant            ::= _intconstant
+Actuals             ::= L
                             {: reduceRuleOutput(112); :}
-                    |   _doubleconstant
+                    ;
+Constant            ::= _intconstant
                             {: reduceRuleOutput(113); :}
-                    |   _stringconstant
+                    |   _doubleconstant
                             {: reduceRuleOutput(114); :}
-                    |   _booleanconstant
+                    |   _stringconstant
                             {: reduceRuleOutput(115); :}
+                    |   _booleanconstant
+                            {: reduceRuleOutput(116); :}
                     ;
 IdLbracket          ::= _id _leftbracket
-                            {: reduceRuleOutput(116); :}
+                            {: reduceRuleOutput(117); :}
+                    ;
+IdPeriod            ::= _id _period
+                            {: reduceRuleOutput(118); :}
                     ;
