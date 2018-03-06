@@ -1,0 +1,6 @@
+// in class
+class A {
+	if (h>w) g=h;
+	else h=g;
+	double a;
+}

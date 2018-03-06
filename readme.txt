@@ -13,10 +13,10 @@ Instructions:
 	$ javac -cp .:java-cup-bin-11b/java-cup-11b-runtime.jar *.java
 
 4)	Run main test program with supplied toy program file
-	$ java java -cp .:java-cup-bin-11b/java-cup-11b-runtime.jar ToyParserTest sample.toy
+	$ java java -cp .:java-cup-bin-11b/java-cup-11b-runtime.jar ToyParserTest ParseTests/sample.toy
 
 5)	Run test Program with other test files
-	$ java -cp .:java-cup-bin-11b/java-cup-11b-runtime.jar ToyParserTest testparse.txt
+	$ java -cp .:java-cup-bin-11b/java-cup-11b-runtime.jar ToyParserTest ParseTests/testcase1.toy
 
 
 (Optional) Use Scripts provided to do above:
