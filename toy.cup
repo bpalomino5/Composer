@@ -154,28 +154,36 @@ non terminal Prototype;
 non terminal H;
 non terminal I;
 non terminal Stmt;
-non terminal IfStmt;
-non terminal WhileStmt;
-non terminal ForStmt;
+//non terminal IfStmt;
+//non terminal WhileStmt;
+//non terminal ForStmt;
 non terminal BreakStmt;
 non terminal ReturnStmt;
 non terminal PrintStmt;
 non terminal J;
 non terminal Expr;
-non terminal K;
+//non terminal K;
 non terminal L;
 non terminal Lvalue;
-non terminal M;
+/*non terminal M;
 non terminal N;
 non terminal O;
 non terminal P;
 non terminal Q;
 non terminal R;
 non terminal S;
-non terminal T;
+non terminal T;*/
 non terminal Constant;
 non terminal Call;
 non terminal Actuals;
+non terminal Matched;
+non terminal Unmatched;
+non terminal UIf;
+non terminal UWhile;
+non terminal UFor;
+non terminal MIf;
+non terminal MWhile;
+non terminal MFor;
 
 /* Precedence */
 precedence left _assignop;
@@ -216,7 +224,7 @@ Decl                ::= VariableDecl
 VariableDecl        ::= Variable
                             {: reduceRuleOutput(8); :}
                     ;
-Variable            ::= Type _id
+Variable            ::= Type _id _semicolon
                             {: reduceRuleOutput(9); :}
                     ;
 Type                ::= _int
@@ -316,16 +324,16 @@ StmtBlock           ::= _leftbrace H I _rightbrace
                             {: reduceRuleOutput(50); :}
                     ;
 H                   ::= VariableDecl
-                            {: reduceRuleOutput(52); :}
-                    |   VariableDecl H
                             {: reduceRuleOutput(51); :}
+                    |   VariableDecl H
+                            {: reduceRuleOutput(52); :}
                     ;
 I                   ::= Stmt I
                             {: reduceRuleOutput(53); :}
                     |   Stmt
                             {: reduceRuleOutput(54); :}
                     ;
-Stmt                ::= J _semicolon
+Stmt                ::= /*J _semicolon
                             {: reduceRuleOutput(55); :}
                     |   IfStmt
                             {: reduceRuleOutput(56); :}
@@ -342,12 +350,16 @@ Stmt                ::= J _semicolon
                     |   StmtBlock
                             {: reduceRuleOutput(62); :}
                     |   _semicolon
-                            {: reduceRuleOutput(63); :}
+                            {: reduceRuleOutput(63); :}*/
+                       Matched
+                            {: reduceRuleOutput(55); :}
+                    |   Unmatched
+                            {: reduceRuleOutput(56); :}
                     ;
 J                   ::= Expr
                             {: reduceRuleOutput(64); :}
                     ;
-IfStmt              ::= _if _leftparen Expr _rightparen Stmt K
+/*IfStmt              ::= _if _leftparen Expr _rightparen Stmt K
                             {: reduceRuleOutput(65); :}
                     |   _if _leftparen Expr _rightparen Stmt
                             {: reduceRuleOutput(66); :}
@@ -366,7 +378,7 @@ ForStmt             ::= _for _leftparen J _semicolon Expr _semicolon J _rightpar
                             {: reduceRuleOutput(71); :}
                     |   _for _leftparen _semicolon Expr _semicolon _rightparen
                             {: reduceRuleOutput(72); :}
-                    ;
+                    ;*/
 BreakStmt           ::= _break
                             {: reduceRuleOutput(73); :}
                     ;
@@ -383,15 +395,15 @@ L                   ::= Expr
                     |   Expr _comma L
                             {: reduceRuleOutput(78); :}
                     ;
-Expr                ::= Lvalue _assignop Expr
+/*Expr                ::= Lvalue _assignop Expr
                             {: reduceRuleOutput(79); :}
                     |   M
                             {: reduceRuleOutput(80); :}
                     ;
 M                   ::= N
-                            {: reduceRuleOutput(82); :}
-                    |   Expr _or N
                             {: reduceRuleOutput(81); :}
+                    |   Expr _or N
+                            {: reduceRuleOutput(82); :}
                     ;
 N                   ::= Expr _and O
                             {: reduceRuleOutput(83); :}
@@ -399,48 +411,95 @@ N                   ::= Expr _and O
                             {: reduceRuleOutput(84); :}
                     ;
 O                   ::= P
-                            {: reduceRuleOutput(87); :}
-                    |   Expr _equal P
                             {: reduceRuleOutput(85); :}
-                    |   Expr _notequal P
+                    |   Expr _equal P
                             {: reduceRuleOutput(86); :}
+                    |   Expr _notequal P
+                            {: reduceRuleOutput(87); :}
                     ;
 P                   ::= Q
-                            {: reduceRuleOutput(92); :}
-                    |   Expr _less Expr
                             {: reduceRuleOutput(88); :}
+                    |   Expr _less Expr
+                            {: reduceRuleOutput(89); :}
                     |   Expr _lessequal Expr
                             {: reduceRuleOutput(90); :}
                     |   Expr _greater Expr
-                            {: reduceRuleOutput(89); :}
-                    |   Expr _greaterequal Expr
                             {: reduceRuleOutput(91); :}
+                    |   Expr _greaterequal Expr
+                            {: reduceRuleOutput(92); :}
                     ;
 Q                   ::= R
-                            {: reduceRuleOutput(95); :}
-                    |   Expr _plus R
                             {: reduceRuleOutput(93); :}
-                    |   Expr _minus R
+                    |   Expr _plus R
                             {: reduceRuleOutput(94); :}
+                    |   Expr _minus R
+                            {: reduceRuleOutput(95); :}
                     ;
 R                   ::= S
-                            {: reduceRuleOutput(99); :}
-                    |   Expr _multiplication S
                             {: reduceRuleOutput(96); :}
-                    |   Expr _division S
+                    |   Expr _multiplication S
                             {: reduceRuleOutput(97); :}
-                    |   Expr _mod S
+                    |   Expr _division S
                             {: reduceRuleOutput(98); :}
+                    |   Expr _mod S
+                            {: reduceRuleOutput(99); :}
                     ;
 S                   ::= T
-                            {: reduceRuleOutput(102); :}
-                    |   _not T
                             {: reduceRuleOutput(100); :}
+                    |   _not T
+                            {: reduceRuleOutput(101); :}
                     |   _minus T
-                            {: reduceRuleOutput(101); :} %prec _not
+                            {: reduceRuleOutput(102); :} %prec _not 
+                            // Used the precedence for _not because unary minus and _not are in the same precedence group, and 
+                            // there is no nonterminal for unary minus.
                     ;
 T                   ::= _leftparen Expr _rightparen
                             {: reduceRuleOutput(103); :}
+                    |   Constant
+                            {: reduceRuleOutput(104); :}
+                    |   Lvalue
+                            {: reduceRuleOutput(105); :}
+                    |   Call
+                            {: reduceRuleOutput(106); :}
+                    |   _readln _leftparen _rightparen
+                            {: reduceRuleOutput(107); :}
+                    |   _newarray _leftparen _intconstant _comma Type _rightparen
+                            {: reduceRuleOutput(108); :}
+                    ;*/
+Expr                ::= Lvalue _assignop Expr
+                            {: reduceRuleOutput(79); :}
+                    |   Expr _or Expr
+                            {: reduceRuleOutput(82); :}
+                    |   Expr _and Expr
+                            {: reduceRuleOutput(83); :}
+                    |   Expr _equal Expr
+                            {: reduceRuleOutput(86); :}
+                    |   Expr _notequal Expr
+                            {: reduceRuleOutput(87); :}
+                    |   Expr _less Expr
+                            {: reduceRuleOutput(89); :}
+                    |   Expr _lessequal Expr
+                            {: reduceRuleOutput(90); :}
+                    |   Expr _greater Expr
+                            {: reduceRuleOutput(91); :}
+                    |   Expr _greaterequal Expr
+                            {: reduceRuleOutput(92); :}
+                    |   Expr _plus Expr
+                            {: reduceRuleOutput(94); :}
+                    |   Expr _minus Expr
+                            {: reduceRuleOutput(95); :}
+                    |   Expr _multiplication Expr
+                            {: reduceRuleOutput(97); :}
+                    |   Expr _division Expr
+                            {: reduceRuleOutput(98); :}
+                    |   Expr _mod Expr
+                            {: reduceRuleOutput(99); :}
+                    |   _not Expr
+                            {: reduceRuleOutput(101); :}
+                    |   _minus Expr
+                            {: reduceRuleOutput(102); :} %prec _not 
+                            // Used the precedence for _not because unary minus and _not are in the same precedence group, and 
+                            // there is no nonterminal for unary minus.
                     |   Constant
                             {: reduceRuleOutput(104); :}
                     |   Lvalue
@@ -479,4 +538,62 @@ Constant            ::= _intconstant
                             {: reduceRuleOutput(119); :}
                     |   _booleanconstant
                             {: reduceRuleOutput(120); :}
+                    ;
+Unmatched           ::= UIf
+                            {: reduceRuleOutput(121); :}
+                    |   UWhile
+                            {: reduceRuleOutput(122); :}
+                    |   UFor
+                            {: reduceRuleOutput(123); :}
+                    ;
+Matched             ::= MIf
+                            {: reduceRuleOutput(124); :}
+                    |   MWhile
+                            {: reduceRuleOutput(125); :}
+                    |   MFor
+                            {: reduceRuleOutput(126); :}
+                    |   J _semicolon
+                            {: reduceRuleOutput(127); :}
+                    |   _semicolon
+                            {: reduceRuleOutput(128); :}
+                    |   BreakStmt
+                            {: reduceRuleOutput(129); :}
+                    |   ReturnStmt
+                            {: reduceRuleOutput(130); :}
+                    |   PrintStmt
+                            {: reduceRuleOutput(131); :}
+                    |   StmtBlock
+                            {: reduceRuleOutput(132); :}
+                    ;
+UIf                 ::= _if _leftparen Expr _rightparen Stmt
+                            {: reduceRuleOutput(133); :}
+                    |   _if _leftparen Expr _rightparen Matched _else Unmatched
+                            {: reduceRuleOutput(134); :}
+                    ;
+MIf                 ::= _if _leftparen Expr _rightparen Matched _else Matched
+                            {: reduceRuleOutput(135); :}
+                    ;
+UWhile              ::= _while _leftparen Expr _rightparen Unmatched
+                            {: reduceRuleOutput(136); :}
+                    ;
+MWhile              ::= _while _leftparen Expr _rightparen Matched
+                            {: reduceRuleOutput(137); :}
+                    ;
+UFor                ::= _for _leftparen J _semicolon Expr _semicolon J _rightparen Unmatched
+                            {: reduceRuleOutput(138); :}
+                    |   _for _leftparen _semicolon Expr _semicolon J _rightparen Unmatched
+                            {: reduceRuleOutput(139); :}
+                    |   _for _leftparen J _semicolon Expr _semicolon _rightparen Unmatched
+                            {: reduceRuleOutput(140); :}
+                    |   _for _leftparen _semicolon Expr _semicolon _rightparen Unmatched
+                            {: reduceRuleOutput(141); :}
+                    ;
+MFor                ::= _for _leftparen J _semicolon Expr _semicolon J _rightparen Matched
+                            {: reduceRuleOutput(142); :}
+                    |   _for _leftparen _semicolon Expr _semicolon J _rightparen Matched
+                            {: reduceRuleOutput(143); :}
+                    |   _for _leftparen J _semicolon Expr _semicolon _rightparen Matched
+                            {: reduceRuleOutput(144); :}
+                    |   _for _leftparen _semicolon Expr _semicolon _rightparen Matched
+                            {: reduceRuleOutput(145); :}
                     ;
