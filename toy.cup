@@ -154,15 +154,15 @@ non terminal Prototype;
 non terminal H;
 non terminal I;
 non terminal Stmt;
-//non terminal IfStmt;
-//non terminal WhileStmt;
-//non terminal ForStmt;
+non terminal IfStmt;
+non terminal WhileStmt;
+non terminal ForStmt;
 non terminal BreakStmt;
 non terminal ReturnStmt;
 non terminal PrintStmt;
 non terminal J;
 non terminal Expr;
-//non terminal K;
+non terminal K;
 non terminal L;
 non terminal Lvalue;
 /*non terminal M;
@@ -176,7 +176,7 @@ non terminal T;*/
 non terminal Constant;
 non terminal Call;
 non terminal Actuals;
-non terminal Matched;
+/*non terminal Matched;
 non terminal Unmatched;
 non terminal UIf;
 non terminal UWhile;
@@ -184,6 +184,9 @@ non terminal UFor;
 non terminal MIf;
 non terminal MWhile;
 non terminal MFor;
+non terminal UH;
+non terminal MH;*/
+non terminal IdLbracket;
 
 /* Precedence */
 precedence left _assignop;
@@ -221,10 +224,10 @@ Decl                ::= VariableDecl
                     |   InterfaceDecl
                             {: reduceRuleOutput(7); :}
                     ;
-VariableDecl        ::= Variable
+VariableDecl        ::= Variable _semicolon
                             {: reduceRuleOutput(8); :}
                     ;
-Variable            ::= Type _id _semicolon
+Variable            ::= Type _id
                             {: reduceRuleOutput(9); :}
                     ;
 Type                ::= _int
@@ -235,7 +238,8 @@ Type                ::= _int
                             {: reduceRuleOutput(12); :}
                     |   _string
                             {: reduceRuleOutput(13); :}
-                    |   Type _leftbracket _rightbracket
+                    |   //Type _leftbracket _rightbracket
+                        IdLbracket _rightbracket
                             {: reduceRuleOutput(14); :}
                     |   _id
                             {: reduceRuleOutput(15); :}
@@ -333,7 +337,7 @@ I                   ::= Stmt I
                     |   Stmt
                             {: reduceRuleOutput(54); :}
                     ;
-Stmt                ::= /*J _semicolon
+Stmt                ::= J _semicolon
                             {: reduceRuleOutput(55); :}
                     |   IfStmt
                             {: reduceRuleOutput(56); :}
@@ -350,16 +354,16 @@ Stmt                ::= /*J _semicolon
                     |   StmtBlock
                             {: reduceRuleOutput(62); :}
                     |   _semicolon
-                            {: reduceRuleOutput(63); :}*/
-                       Matched
+                            {: reduceRuleOutput(63); :}
+                    /*   Matched
                             {: reduceRuleOutput(55); :}
                     |   Unmatched
-                            {: reduceRuleOutput(56); :}
+                            {: reduceRuleOutput(56); :}*/
                     ;
 J                   ::= Expr
                             {: reduceRuleOutput(64); :}
                     ;
-/*IfStmt              ::= _if _leftparen Expr _rightparen Stmt K
+IfStmt              ::= _if _leftparen Expr _rightparen Stmt K
                             {: reduceRuleOutput(65); :}
                     |   _if _leftparen Expr _rightparen Stmt
                             {: reduceRuleOutput(66); :}
@@ -378,7 +382,7 @@ ForStmt             ::= _for _leftparen J _semicolon Expr _semicolon J _rightpar
                             {: reduceRuleOutput(71); :}
                     |   _for _leftparen _semicolon Expr _semicolon _rightparen
                             {: reduceRuleOutput(72); :}
-                    ;*/
+                    ;
 BreakStmt           ::= _break
                             {: reduceRuleOutput(73); :}
                     ;
@@ -500,6 +504,8 @@ Expr                ::= Lvalue _assignop Expr
                             {: reduceRuleOutput(102); :} %prec _not 
                             // Used the precedence for _not because unary minus and _not are in the same precedence group, and 
                             // there is no nonterminal for unary minus.
+                    |   _leftparen Expr _rightparen
+                            {: reduceRuleOutput(1000); :}
                     |   Constant
                             {: reduceRuleOutput(104); :}
                     |   Lvalue
@@ -513,7 +519,8 @@ Expr                ::= Lvalue _assignop Expr
                     ;
 Lvalue              ::= _id
                             {: reduceRuleOutput(109); :}
-                    |   Lvalue _leftbracket Expr _rightbracket
+                    |   //Lvalue _leftbracket Expr _rightbracket
+                        IdLbracket Expr _rightbracket
                             {: reduceRuleOutput(110); :}
                     |   Lvalue _period _id
                             {: reduceRuleOutput(111); :}
@@ -539,7 +546,7 @@ Constant            ::= _intconstant
                     |   _booleanconstant
                             {: reduceRuleOutput(120); :}
                     ;
-Unmatched           ::= UIf
+/*Unmatched           ::= UIf
                             {: reduceRuleOutput(121); :}
                     |   UWhile
                             {: reduceRuleOutput(122); :}
@@ -596,4 +603,7 @@ MFor                ::= _for _leftparen J _semicolon Expr _semicolon J _rightpar
                             {: reduceRuleOutput(144); :}
                     |   _for _leftparen _semicolon Expr _semicolon _rightparen Matched
                             {: reduceRuleOutput(145); :}
+                    ;*/
+IdLbracket          ::= _id _leftbracket
+                            {: reduceRuleOutput(146); :}
                     ;
