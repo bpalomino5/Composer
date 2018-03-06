@@ -1,0 +1,1 @@
+java -cp .:java-cup-bin-11b/java-cup-11b-runtime.jar ToyParserTest $1
