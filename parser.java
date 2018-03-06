@@ -707,7 +707,7 @@ public class parser extends java_cup.runtime.lr_parser {
      * Add a reduce rule with the given number to the output string.
      */
     public void reduceRuleOutput(int ruleNum) {
-        output.insert(output.length() - 7, "[reduce");
+        output.insert(output.length() - 7, "[reduce ");
         output.insert(output.length() - 7, ruleNum);
         output.insert(output.length() - 7, ']');
     }
