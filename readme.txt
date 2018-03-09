@@ -16,7 +16,7 @@ Instructions:
 	$ java java -cp .:java-cup-bin-11b/java-cup-11b-runtime.jar ToyParserTest ParseTests/sample.toy
 
 5)	Run test Program with other test files
-	$ java -cp .:java-cup-bin-11b/java-cup-11b-runtime.jar ToyParserTest ParseTests/testcase1.toy
+	$ java -cp .:java-cup-bin-11b/java-cup-11b-runtime.jar ToyParserTest ParseTests/<filename>
 
 
 (Optional) Use Scripts provided to do above:
