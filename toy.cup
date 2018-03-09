@@ -182,7 +182,7 @@ precedence nonassoc _greater, _greaterequal, _less, _lessequal;
 precedence left _plus, _minus;
 precedence left _multiplication, _division, _mod;
 precedence left _not;
-//precedence left _leftbracket, _period;
+
 
 /* Grammar rules */
 Program             ::= A
