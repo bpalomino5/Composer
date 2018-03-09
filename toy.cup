@@ -259,7 +259,7 @@ B                   ::= Variable
                             {: reduceRuleOutput(27); :}
                     ;
 ClassDecl           ::= _class _id C D _leftbrace E _leftbrace
-                            {: reduceRuleOutput(27); :}
+                            {: reduceRuleOutput(28); :}
                     |   _class _id D _leftbrace E _rightbrace
                             {: reduceRuleOutput(29); :}
                     |   _class _id C _leftbrace E _rightbrace
