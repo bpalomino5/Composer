@@ -74,7 +74,7 @@ boolean isequal(boolean bool) {
     }
 }
 
-/* Assorted other tokens I'm not sure what to do with.  No attempt at likely syntax*/
+// functions
 void expression(){
     readln();
     hello.world();
