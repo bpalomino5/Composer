@@ -12,8 +12,9 @@ boolean fail(int y) {
  * _multiplication, _assignop, _comma, _leftbracket, _rightbracket, _stringconstant
  */
 string[]  strings(int  num, int num2) {
-    string[] output = newarray(num, string);
-    for (int i = 0; i < num; i = i + 1) {
+    string[] output;
+    output = newarray(15, string);
+    for (i = 0; i < num; i = i + 1) {
         output[i] = "hello";
         if ( num > 2 * num2) { break; }
     }
@@ -30,20 +31,20 @@ class HelloClass implements Template{
     double  b;
     boolean c;
     
-    HelloClass() {
+    void HelloClass() {
         a = 0x9;
         b = 55555393.5;
         c = false;
     }
     
-    HelloClass(int arg, double arg2, boolean arg3) {
+    void HelloClass(int arg, double arg2, boolean arg3) {
         a = arg;
         b = arg2;
         c = arg3;
     }
     
     void display () {
-        for (int n = a; b >= n; n = n * 2) {
+        for (n = a; b >= n; n = n * 2) {
             println("_");
         }
     }
@@ -73,6 +74,8 @@ boolean isequal(boolean bool) {
     }
 }
 
-/* Assorted other tokens I'm not sure what to do with.  No attempt at likely syntax*/
-readln()
-.
+// functions
+void expression(){
+    readln();
+    hello.world();
+}

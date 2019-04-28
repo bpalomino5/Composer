@@ -37,7 +37,7 @@ parser code {:
      * Add a reduce rule with the given number to the output string.
      */
     public void reduceRuleOutput(int ruleNum) {
-        output.insert(output.length() - 7, "[reduce");
+        output.insert(output.length() - 7, "[reduce ");
         output.insert(output.length() - 7, ruleNum);
         output.insert(output.length() - 7, ']');
     }
@@ -141,6 +141,9 @@ non terminal ClassDecl;
 non terminal InterfaceDecl;
 non terminal Variable;
 non terminal Type;
+non terminal Primitive;
+non terminal Nonprimitive;
+non terminal NonprimitiveArray;
 non terminal Formals;
 non terminal StmtBlock;
 non terminal B;
@@ -162,20 +165,13 @@ non terminal ReturnStmt;
 non terminal PrintStmt;
 non terminal J;
 non terminal Expr;
-non terminal K;
 non terminal L;
 non terminal Lvalue;
-non terminal M;
-non terminal N;
-non terminal O;
-non terminal P;
-non terminal Q;
-non terminal R;
-non terminal S;
-non terminal T;
 non terminal Constant;
 non terminal Call;
 non terminal Actuals;
+non terminal IdLbracket;
+non terminal IdPeriod;
 
 /* Precedence */
 precedence left _assignop;
@@ -186,7 +182,7 @@ precedence nonassoc _greater, _greaterequal, _less, _lessequal;
 precedence left _plus, _minus;
 precedence left _multiplication, _division, _mod;
 precedence left _not;
-precedence left _leftbracket, _period;
+
 
 /* Grammar rules */
 Program             ::= A
@@ -213,270 +209,266 @@ Decl                ::= VariableDecl
                     |   InterfaceDecl
                             {: reduceRuleOutput(7); :}
                     ;
-VariableDecl        ::= Variable
+VariableDecl        ::= Variable _semicolon
                             {: reduceRuleOutput(8); :}
                     ;
 Variable            ::= Type _id
                             {: reduceRuleOutput(9); :}
                     ;
-Type                ::= _int
+Type                ::= Primitive
                             {: reduceRuleOutput(10); :}
-                    |   _double
+                    |   Nonprimitive
                             {: reduceRuleOutput(11); :}
-                    |   _boolean
+                    ;
+Primitive           ::= _int
                             {: reduceRuleOutput(12); :}
-                    |   _string
+                    |   _double
                             {: reduceRuleOutput(13); :}
-                    |   Type _leftbracket _rightbracket
+                    |   _boolean
                             {: reduceRuleOutput(14); :}
-                    |   _id
+                    |   _string
                             {: reduceRuleOutput(15); :}
-                    ;
-FunctionDecl        ::= Type _id _leftparen Formals _rightparen StmtBlock
+                    |   Primitive _leftbracket _rightbracket
                             {: reduceRuleOutput(16); :}
-                    |   _void _id _leftparen Formals _rightparen StmtBlock
-                            {: reduceRuleOutput(17); :}
-                    |   Type _id _leftparen _rightparen StmtBlock
-                            {: reduceRuleOutput(18); :}
-                    |   _void _id _leftparen _rightparen StmtBlock
-                            {: reduceRuleOutput(19); :}
                     ;
-Formals             ::= B
+Nonprimitive        ::= NonprimitiveArray
+                            {: reduceRuleOutput(17); :}
+                    |   _id
+                            {: reduceRuleOutput(18); :}
+                    ;
+NonprimitiveArray   ::= IdLbracket _rightbracket
+                            {: reduceRuleOutput(19); :}
+                    |   NonprimitiveArray _leftbracket _rightbracket
                             {: reduceRuleOutput(20); :}
                     ;
-B                   ::= Variable
+FunctionDecl        ::= Type _id _leftparen Formals _rightparen StmtBlock
                             {: reduceRuleOutput(21); :}
-                    |   Variable _comma B
+                    |   _void _id _leftparen Formals _rightparen StmtBlock
                             {: reduceRuleOutput(22); :}
+                    |   Type _id _leftparen _rightparen StmtBlock
+                            {: reduceRuleOutput(23); :}
+                    |   _void _id _leftparen _rightparen StmtBlock
+                            {: reduceRuleOutput(24); :}
+                    ;
+Formals             ::= B
+                            {: reduceRuleOutput(25); :}
+                    ;
+B                   ::= Variable
+                            {: reduceRuleOutput(26); :}
+                    |   Variable _comma B
+                            {: reduceRuleOutput(27); :}
                     ;
 ClassDecl           ::= _class _id C D _leftbrace E _leftbrace
-                            {: reduceRuleOutput(23); :}
-                    |   _class _id D _leftbrace E _rightbrace
-                            {: reduceRuleOutput(24); :}
-                    |   _class _id C _leftbrace E _rightbrace
-                            {: reduceRuleOutput(25); :}
-                    |   _class _id _leftbrace E _rightbrace
-                            {: reduceRuleOutput(26); :}
-                    |   _class _id C D _leftbrace _rightbrace
-                            {: reduceRuleOutput(27); :}
-                    |   _class _id D _leftbrace _rightbrace
                             {: reduceRuleOutput(28); :}
-                    |   _class _id C _leftbrace _rightbrace
+                    |   _class _id D _leftbrace E _rightbrace
                             {: reduceRuleOutput(29); :}
-                    |   _class _id _leftbrace _rightbrace
+                    |   _class _id C _leftbrace E _rightbrace
                             {: reduceRuleOutput(30); :}
+                    |   _class _id _leftbrace E _rightbrace
+                            {: reduceRuleOutput(31); :}
+                    |   _class _id C D _leftbrace _rightbrace
+                            {: reduceRuleOutput(32); :}
+                    |   _class _id D _leftbrace _rightbrace
+                            {: reduceRuleOutput(33); :}
+                    |   _class _id C _leftbrace _rightbrace
+                            {: reduceRuleOutput(34); :}
+                    |   _class _id _leftbrace _rightbrace
+                            {: reduceRuleOutput(35); :}
                     ;
 C                   ::= _extends _id
-                            {: reduceRuleOutput(31); :}
-                    ;
-D                   ::= F
-                            {: reduceRuleOutput(32); :}
-                    ;
-F                   ::= _implements _id
-                            {: reduceRuleOutput(33); :}
-                    |   _implements _id _comma F
-                            {: reduceRuleOutput(34); :}
-                    ;
-E                   ::= Field E
-                            {: reduceRuleOutput(35); :}
-                    |   Field
                             {: reduceRuleOutput(36); :}
                     ;
-Field               ::= VariableDecl
+D                   ::= F
                             {: reduceRuleOutput(37); :}
-                    |   FunctionDecl
+                    ;
+F                   ::= _implements _id
                             {: reduceRuleOutput(38); :}
+                    |   _implements _id _comma F
+                            {: reduceRuleOutput(39); :}
+                    ;
+E                   ::= Field E
+                            {: reduceRuleOutput(40); :}
+                    |   Field
+                            {: reduceRuleOutput(41); :}
+                    ;
+Field               ::= VariableDecl
+                            {: reduceRuleOutput(42); :}
+                    |   FunctionDecl
+                            {: reduceRuleOutput(43); :}
                     ;
 InterfaceDecl       ::= _interface _id _leftbrace G _rightbrace
-                            {: reduceRuleOutput(39); :}
+                            {: reduceRuleOutput(44); :}
                     |   _interface _id _leftbrace _rightbrace
-                            {: reduceRuleOutput(40); :}
+                            {: reduceRuleOutput(45); :}
                     ;
 G                   ::= Prototype G
-                            {: reduceRuleOutput(41); :}
+                            {: reduceRuleOutput(46); :}
                     |   Prototype
-                            {: reduceRuleOutput(42); :}
+                            {: reduceRuleOutput(47); :}
                     ;
 Prototype           ::= Type _id _leftparen Formals _rightparen _semicolon
-                            {: reduceRuleOutput(43); :}
-                    |   _void _id _leftparen Formals _rightparen _semicolon
-                            {: reduceRuleOutput(44); :}
-                    |   Type _id _leftparen _rightparen _semicolon
-                            {: reduceRuleOutput(45); :}
-                    |   _void _id _leftparen _rightparen _semicolon
-                            {: reduceRuleOutput(46); :}
-                    ;
-StmtBlock           ::= _leftbrace H I _rightbrace
-                            {: reduceRuleOutput(47); :}
-                    |   _leftbrace I _rightbrace
                             {: reduceRuleOutput(48); :}
-                    |   _leftbrace H _rightbrace
+                    |   _void _id _leftparen Formals _rightparen _semicolon
                             {: reduceRuleOutput(49); :}
-                    |   _leftbrace _rightbrace
+                    |   Type _id _leftparen _rightparen _semicolon
                             {: reduceRuleOutput(50); :}
-                    ;
-H                   ::= VariableDecl
-                            {: reduceRuleOutput(52); :}
-                    |   VariableDecl H
+                    |   _void _id _leftparen _rightparen _semicolon
                             {: reduceRuleOutput(51); :}
                     ;
-I                   ::= Stmt I
+StmtBlock           ::= _leftbrace I _rightbrace
+                            {: reduceRuleOutput(52); :}
+                    |   _leftbrace H _rightbrace
                             {: reduceRuleOutput(53); :}
-                    |   Stmt
+                    |   _leftbrace _rightbrace
                             {: reduceRuleOutput(54); :}
                     ;
-Stmt                ::= J _semicolon
+H                   ::= VariableDecl
                             {: reduceRuleOutput(55); :}
-                    |   IfStmt
+                    |   VariableDecl H
                             {: reduceRuleOutput(56); :}
-                    |   WhileStmt
+                    |   VariableDecl I
                             {: reduceRuleOutput(57); :}
-                    |   ForStmt
+                    ;
+I                   ::= Stmt I
                             {: reduceRuleOutput(58); :}
-                    |   BreakStmt
+                    |   Stmt
                             {: reduceRuleOutput(59); :}
-                    |   ReturnStmt
+                    ;
+Stmt                ::= J _semicolon
                             {: reduceRuleOutput(60); :}
-                    |   PrintStmt
+                    |   IfStmt
                             {: reduceRuleOutput(61); :}
-                    |   StmtBlock
+                    |   WhileStmt
                             {: reduceRuleOutput(62); :}
-                    |   _semicolon
+                    |   ForStmt
                             {: reduceRuleOutput(63); :}
-                    ;
-J                   ::= Expr
+                    |   BreakStmt
                             {: reduceRuleOutput(64); :}
-                    ;
-IfStmt              ::= _if _leftparen Expr _rightparen Stmt K
+                    |   ReturnStmt
                             {: reduceRuleOutput(65); :}
-                    |   _if _leftparen Expr _rightparen Stmt
+                    |   PrintStmt
                             {: reduceRuleOutput(66); :}
-                    ;
-K                   ::= _else Stmt
+                    |   StmtBlock
                             {: reduceRuleOutput(67); :}
-                    ;
-WhileStmt           ::= _while _leftparen Expr _rightparen Stmt
+                    |   _semicolon
                             {: reduceRuleOutput(68); :}
                     ;
-ForStmt             ::= _for _leftparen J _semicolon Expr _semicolon J _rightparen Stmt
+J                   ::= Expr
                             {: reduceRuleOutput(69); :}
-                    |   _for _leftparen _semicolon Expr _semicolon J _rightparen
+                    ;
+IfStmt              ::= _if _leftparen Expr _rightparen Stmt _else Stmt
                             {: reduceRuleOutput(70); :}
-                    |   _for _leftparen J _semicolon Expr _semicolon _rightparen
+                    |   _if _leftparen Expr _rightparen Stmt
                             {: reduceRuleOutput(71); :}
-                    |   _for _leftparen _semicolon Expr _semicolon _rightparen
+                    ;
+WhileStmt           ::= _while _leftparen Expr _rightparen Stmt
                             {: reduceRuleOutput(72); :}
                     ;
-BreakStmt           ::= _break
+ForStmt             ::= _for _leftparen J _semicolon Expr _semicolon J _rightparen Stmt
                             {: reduceRuleOutput(73); :}
-                    ;
-ReturnStmt          ::= _return J _semicolon
+                    |   _for _leftparen _semicolon Expr _semicolon J _rightparen
                             {: reduceRuleOutput(74); :}
-                    |   _return _semicolon
+                    |   _for _leftparen J _semicolon Expr _semicolon _rightparen
                             {: reduceRuleOutput(75); :}
-                    ;
-PrintStmt           ::= _println _leftparen L _rightparen _semicolon
+                    |   _for _leftparen _semicolon Expr _semicolon _rightparen
                             {: reduceRuleOutput(76); :}
                     ;
-L                   ::= Expr
+BreakStmt           ::= _break
                             {: reduceRuleOutput(77); :}
-                    |   Expr _comma L
-                            {: reduceRuleOutput(78); :}
                     ;
-Expr                ::= Lvalue _assignop Expr
+ReturnStmt          ::= _return J _semicolon
+                            {: reduceRuleOutput(78); :}
+                    |   _return _semicolon
                             {: reduceRuleOutput(79); :}
-                    |   M
+                    ;
+PrintStmt           ::= _println _leftparen L _rightparen _semicolon
                             {: reduceRuleOutput(80); :}
                     ;
-M                   ::= N
-                            {: reduceRuleOutput(82); :}
-                    |   Expr _or N
+L                   ::= Expr
                             {: reduceRuleOutput(81); :}
+                    |   Expr _comma L
+                            {: reduceRuleOutput(82); :}
                     ;
-N                   ::= Expr _and O
+Expr                ::= Lvalue _assignop Expr
                             {: reduceRuleOutput(83); :}
-                    |   O
+                    |   Expr _or Expr
                             {: reduceRuleOutput(84); :}
-                    ;
-O                   ::= P
-                            {: reduceRuleOutput(87); :}
-                    |   Expr _equal P
+                    |   Expr _and Expr
                             {: reduceRuleOutput(85); :}
-                    |   Expr _notequal P
+                    |   Expr _equal Expr
                             {: reduceRuleOutput(86); :}
-                    ;
-P                   ::= Q
-                            {: reduceRuleOutput(92); :}
+                    |   Expr _notequal Expr
+                            {: reduceRuleOutput(87); :}
                     |   Expr _less Expr
                             {: reduceRuleOutput(88); :}
                     |   Expr _lessequal Expr
-                            {: reduceRuleOutput(90); :}
-                    |   Expr _greater Expr
                             {: reduceRuleOutput(89); :}
+                    |   Expr _greater Expr
+                            {: reduceRuleOutput(90); :}
                     |   Expr _greaterequal Expr
                             {: reduceRuleOutput(91); :}
-                    ;
-Q                   ::= R
-                            {: reduceRuleOutput(95); :}
-                    |   Expr _plus R
+                    |   Expr _plus Expr
+                            {: reduceRuleOutput(92); :}
+                    |   Expr _minus Expr
                             {: reduceRuleOutput(93); :}
-                    |   Expr _minus R
+                    |   Expr _multiplication Expr
                             {: reduceRuleOutput(94); :}
-                    ;
-R                   ::= S
-                            {: reduceRuleOutput(99); :}
-                    |   Expr _multiplication S
+                    |   Expr _division Expr
+                            {: reduceRuleOutput(95); :}
+                    |   Expr _mod Expr
                             {: reduceRuleOutput(96); :}
-                    |   Expr _division S
+                    |   _not Expr
                             {: reduceRuleOutput(97); :}
-                    |   Expr _mod S
-                            {: reduceRuleOutput(98); :}
-                    ;
-S                   ::= T
-                            {: reduceRuleOutput(102); :}
-                    |   _not T
-                            {: reduceRuleOutput(100); :}
-                    |   _minus T
-                            {: reduceRuleOutput(101); :} %prec _not
-                    ;
-T                   ::= _leftparen Expr _rightparen
-                            {: reduceRuleOutput(103); :}
+                    |   _minus Expr
+                            {: reduceRuleOutput(98); :} %prec _not 
+                            // Used the precedence for _not because unary minus and _not are in the same precedence 
+                            // group, and there is no nonterminal for unary minus.
+                    |   _leftparen Expr _rightparen
+                            {: reduceRuleOutput(99); :}
                     |   Constant
-                            {: reduceRuleOutput(104); :}
+                            {: reduceRuleOutput(100); :}
                     |   Lvalue
-                            {: reduceRuleOutput(105); :}
+                            {: reduceRuleOutput(101); :}
                     |   Call
-                            {: reduceRuleOutput(106); :}
+                            {: reduceRuleOutput(102); :}
                     |   _readln _leftparen _rightparen
-                            {: reduceRuleOutput(107); :}
+                            {: reduceRuleOutput(103); :}
                     |   _newarray _leftparen _intconstant _comma Type _rightparen
-                            {: reduceRuleOutput(108); :}
+                            {: reduceRuleOutput(104); :}
                     ;
 Lvalue              ::= _id
-                            {: reduceRuleOutput(109); :}
-                    |   Lvalue _leftbracket Expr _rightbracket
-                            {: reduceRuleOutput(110); :}
+                            {: reduceRuleOutput(105); :}
+                    |   IdLbracket Expr _rightbracket
+                            {: reduceRuleOutput(106); :}
                     |   Lvalue _period _id
-                            {: reduceRuleOutput(111); :}
+                            {: reduceRuleOutput(107); :}
+                    |   IdPeriod _id
+                            {: reduceRuleOutput(108); :}
                     ;
 Call                ::= _id _leftparen Actuals _rightparen
-                            {: reduceRuleOutput(112); :}
-                    |   _id _period _id _leftparen Actuals _rightparen
-                            {: reduceRuleOutput(113); :}
+                            {: reduceRuleOutput(109); :}
+                    |   IdPeriod _id _leftparen Actuals _rightparen
+                            {: reduceRuleOutput(110); :}
                     |   _id _leftparen _rightparen
-                            {: reduceRuleOutput(114); :}
-                    |   _id _period _id _leftparen _rightparen
-                            {: reduceRuleOutput(115); :}
+                            {: reduceRuleOutput(111); :}
+                    |   IdPeriod _id _leftparen _rightparen
+                            {: reduceRuleOutput(112); :}
                     ;
 Actuals             ::= L
-                            {: reduceRuleOutput(116); :}
+                            {: reduceRuleOutput(113); :}
                     ;
 Constant            ::= _intconstant
-                            {: reduceRuleOutput(117); :}
+                            {: reduceRuleOutput(114); :}
                     |   _doubleconstant
-                            {: reduceRuleOutput(118); :}
+                            {: reduceRuleOutput(115); :}
                     |   _stringconstant
-                            {: reduceRuleOutput(119); :}
+                            {: reduceRuleOutput(116); :}
                     |   _booleanconstant
-                            {: reduceRuleOutput(120); :}
+                            {: reduceRuleOutput(117); :}
+                    ;
+IdLbracket          ::= _id _leftbracket
+                            {: reduceRuleOutput(118); :}
+                    ;
+IdPeriod            ::= _id _period
+                            {: reduceRuleOutput(119); :}
                     ;
